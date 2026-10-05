@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FinTrack</string>
+    <string name="scan">Scan receipt</string>
+</resources>

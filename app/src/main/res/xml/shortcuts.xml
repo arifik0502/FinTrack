@@ -1,0 +1,12 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="scan"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:shortcutShortLabel="@string/scan">
+        <intent
+            android:action="com.example.fintrack.SCAN"
+            android:targetPackage="com.example.fintrack"
+            android:targetClass="com.example.fintrack.MainActivity" />
+    </shortcut>
+</shortcuts>
