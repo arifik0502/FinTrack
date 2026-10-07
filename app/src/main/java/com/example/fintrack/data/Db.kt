@@ -16,6 +16,7 @@ interface AppDao {
     @Query("SELECT COUNT(*) FROM tx WHERE dedup=:k AND ts BETWEEN :a AND :b") suspend fun amtDup(k: String, a: Long, b: Long): Int
     @Query("SELECT COALESCE(SUM(amount),0) FROM tx WHERE type='EXPENSE' AND ts BETWEEN :a AND :b AND (:cat='ALL' OR category=:cat)")
     suspend fun spent(a: Long, b: Long, cat: String): Double
+    @Query("DELETE FROM rules") suspend fun clearRules()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putAcc(a: Account): Long
     @Delete suspend fun delAcc(a: Account)
