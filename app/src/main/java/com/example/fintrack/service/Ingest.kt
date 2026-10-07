@@ -22,7 +22,10 @@ object Ingest {
         val k = "${p.type}|${p.amount}"
         if (d.amtDup(k, p.ts - 120_000, p.ts + 120_000) > 0) return
         val prefs = Prefs(c)
+        val generic = p.merchant.equals(label, true) || norm(p.merchant).length < 3
         val cat = if (p.type == "INCOME") Cat("Others", 1f)
+        else if (generic) Cat("Others", 0f)
+        else HybridCategorizer(c, d).categorize(p.merchant, p.amount) ?: Cat("Others", 0f)
         else HybridCategorizer(c, d).categorize(p.merchant, p.amount) ?: Cat("Others", 0f)
         val pending = cat.conf < prefs.threshold
         val accs = d.accountsNow()
