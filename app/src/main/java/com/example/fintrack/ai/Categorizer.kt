@@ -26,6 +26,10 @@ suspend fun learn(d: AppDao, merchant: String, cat: String) {
     if (n.length >= 2) d.putRule(Rule(n, cat))
 }
 
+suspend fun learnTx(d: AppDao, t: com.example.fintrack.data.Tx, cat: String) {
+    if (t.merchant.isNotBlank() && !t.merchant.equals(t.app, true)) learn(d, t.merchant, cat)
+}
+
 class LocalCategorizer(private val d: AppDao) : Categorizer {
     private val kw = linkedMapOf(
         "Food" to listOf("kfc", "mcdonald", "starbucks", "restoran", "restaurant", "cafe", "kopi", "mamak", "nasi", "grabfood", "foodpanda", "shopeefood", "pizza", "domino", "subway", "texas chicken", "secret recipe", "zus", "tealive", "gong cha", "chagee", "mydin", "tesco", "lotus", "aeon big", "giant", "jaya grocer", "village grocer", "99 speedmart", "bakery", "burger", "sushi", "warung", "kedai makan", "bubble tea"),
