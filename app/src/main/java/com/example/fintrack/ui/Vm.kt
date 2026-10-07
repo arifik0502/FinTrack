@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.example.fintrack.ai.learnTx
 
 class Vm(app: Application) : AndroidViewModel(app) {
     val dao = AppDb.get(app).dao()
