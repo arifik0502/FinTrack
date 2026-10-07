@@ -33,9 +33,10 @@ object Ingest {
         val id = d.putTx(Tx(amount = p.amount, type = p.type, merchant = p.merchant, category = cat.name, accountId = acc,
             ts = p.ts, source = "AUTO", app = label, pending = pending, conf = cat.conf, dedup = k, hash = h))
         val t = d.tx(id) ?: return
-        if (pending && !AppState.foreground) {
-            if (Settings.canDrawOverlays(c)) Overlay.show(c, t) else Notifier.pick(c, t)
-        }
+        if (pending) {
+            if (!AppState.foreground) { if (Settings.canDrawOverlays(c)) Overlay.show(c, t) else Notifier.pick(c, t) }
+        } else Notifier.saved(c, t)
+        
         Notifier.checkBudget(c, d, t)
     }
 }
