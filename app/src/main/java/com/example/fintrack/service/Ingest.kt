@@ -36,7 +36,6 @@ object Ingest {
         if (pending) {
             if (!AppState.foreground) { if (Settings.canDrawOverlays(c)) Overlay.show(c, t) else Notifier.pick(c, t) }
         } else Notifier.saved(c, t)
-        
         Notifier.checkBudget(c, d, t)
     }
 }
