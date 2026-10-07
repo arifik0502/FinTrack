@@ -17,7 +17,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.compose.ui.graphics.toArgb
-import com.example.fintrack.ai.learn
+import com.example.fintrack.ai.learnTx
 import com.example.fintrack.data.AppDb
 import com.example.fintrack.data.Cats
 import com.example.fintrack.data.Tx
