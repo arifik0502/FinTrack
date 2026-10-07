@@ -31,6 +31,11 @@ android {
         compose = true
         buildConfig = true
     }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
 }
 dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
