@@ -99,7 +99,7 @@ object Overlay {
         scope.launch {
             val d = AppDb.get(c).dao()
             d.putTx(t.copy(category = cat, pending = false, conf = 1f))
-            learn(d, t.merchant.ifBlank { t.app }, cat)
+            learnTx(d, t, cat)
         }
     }
 }
