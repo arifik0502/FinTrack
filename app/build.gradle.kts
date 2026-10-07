@@ -55,5 +55,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
 }
 
-// Studio sometimes requests this Java-only task; no-op so Android builds don't fail.
-tasks.register("unitTestClasses")
+// Studio sometimes requests these Java-only aggregate tasks; no-ops so Android builds don't fail.
+listOf("unitTestClasses", "androidTestClasses", "testClasses", "classes").forEach { n ->
+    if (tasks.findByName(n) == null) tasks.register(n)
+}
