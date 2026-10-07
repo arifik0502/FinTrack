@@ -58,4 +58,4 @@ dependencies {
 // Studio sometimes requests these Java-only aggregate tasks; no-ops so Android builds don't fail.
 listOf("unitTestClasses", "androidTestClasses", "testClasses", "classes").forEach { n ->
     if (tasks.findByName(n) == null) tasks.register(n)
-}
+}   
