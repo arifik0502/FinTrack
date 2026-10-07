@@ -44,7 +44,7 @@ class LocalCategorizer(private val d: AppDao) : Categorizer {
     override suspend fun categorize(merchant: String, amount: Double): Cat? {
         val n = norm(merchant)
         if (n.isBlank()) return null
-        d.rulesNow().firstOrNull { it.merchant == n || (it.merchant.length >= 4 && (n.contains(it.merchant) || it.merchant.contains(n))) }
+        d.rulesNow().firstOrNull { it.merchant == n || (it.merchant.length >= 5 && Regex("\\b" + Regex.escape(it.merchant) + "\\b").containsMatchIn(n)) }
             ?.let { return Cat(it.category, 0.97f) }
         for ((c, words) in kw) if (words.any { w -> Regex("\\b" + Regex.escape(w)).containsMatchIn(n) }) return Cat(c, 0.92f)
         return null
