@@ -26,7 +26,6 @@ object Ingest {
         val cat = if (p.type == "INCOME") Cat("Others", 1f)
         else if (generic) Cat("Others", 0f)
         else HybridCategorizer(c, d).categorize(p.merchant, p.amount) ?: Cat("Others", 0f)
-        else HybridCategorizer(c, d).categorize(p.merchant, p.amount) ?: Cat("Others", 0f)
         val pending = cat.conf < prefs.threshold
         val accs = d.accountsNow()
         val acc = accs.firstOrNull { it.name.contains(label, true) || label.contains(it.name, true) }?.id
