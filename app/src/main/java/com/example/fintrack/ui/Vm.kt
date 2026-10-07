@@ -40,7 +40,7 @@ class Vm(app: Application) : AndroidViewModel(app) {
     fun deleteTx(t: Tx) = viewModelScope.launch(Dispatchers.IO) { dao.delTx(t) }
     fun setCategory(t: Tx, c: String) = viewModelScope.launch(Dispatchers.IO) {
         dao.putTx(t.copy(category = c, pending = false, conf = 1f))
-        learn(dao, t.merchant.ifBlank { t.app }, c)
+        learnTx(dao, t, c)
     }
     fun skipPending(t: Tx) = viewModelScope.launch(Dispatchers.IO) { dao.putTx(t.copy(pending = false)) }
 
