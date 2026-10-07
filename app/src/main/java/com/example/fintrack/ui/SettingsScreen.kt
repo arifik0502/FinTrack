@@ -81,6 +81,7 @@ fun SettingsScreen(vm: Vm) {
         Text("Budget warning at ${warn.toInt()}%")
         Slider(warn, { warn = it }, valueRange = 50f..100f, onValueChangeFinished = { p.warnPct = warn.toInt() })
 
+        OutlinedButton(onClick = { scope.launch(Dispatchers.IO) { vm.dao.clearRules() }; toast("Learned categories cleared") }) { Text("Reset learned categories") }
         HorizontalDivider()
         Text("AI (optional, Gemini free tier)", style = MaterialTheme.typography.titleMedium)
         Text("Only merchant name + amount (or OCR text if parsing fails) is sent. Local rules run first.", style = MaterialTheme.typography.bodySmall)
