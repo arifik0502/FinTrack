@@ -54,3 +54,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
 }
+
+// Studio sometimes requests this Java-only task; no-op so Android builds don't fail.
+tasks.register("unitTestClasses")
