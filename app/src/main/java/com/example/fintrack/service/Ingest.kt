@@ -9,6 +9,7 @@ import com.example.fintrack.data.Tx
 import com.example.fintrack.parser.Parsers
 import com.example.fintrack.util.Prefs
 import com.example.fintrack.util.sha
+import com.example.fintrack.ai.norm
 
 object Ingest {
     /** Only parsed fields + a hash are stored; raw notification text is never persisted. */
