@@ -36,6 +36,10 @@ object Notifier {
         NotificationManagerCompat.from(c).notify(id, n)
     }
 
+    fun saved(c: Context, t: Tx) =
+        show(c, 4000 + (t.id % 1000).toInt(), if (t.type == "INCOME") "Income saved" else "Expense saved",
+            "${t.merchant.ifBlank { t.app }} ${money(t.amount)} \u2022 ${t.category}")
+    
     fun pick(c: Context, t: Tx) =
         show(c, 1000 + (t.id % 1000).toInt(), "Choose a category", "${t.merchant.ifBlank { t.app }} ${money(t.amount)}")
 
