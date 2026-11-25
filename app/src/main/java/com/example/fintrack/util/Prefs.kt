@@ -12,7 +12,7 @@ class Prefs(c: Context) {
     var warnPct: Int get() = p.getInt("warn", 80); set(v) = p.edit().putInt("warn", v).apply()
     var userKey: String get() = p.getString("gkey", "") ?: ""; set(v) = p.edit().putString("gkey", v.trim()).apply()
     val geminiKey: String get() = userKey.ifBlank { BuildConfig.GEMINI_API_KEY }
-    var geminiModel: String get() = p.getString("gmodel", "gemini-2.5-flash") ?: "gemini-2.5-flash"; set(v) = p.edit().putString("gmodel", v.trim()).apply()
+    var geminiModel: String get() = p.getString("gmodel", "gemini-flash-latest")?.ifBlank { "gemini-flash-latest" } ?: "gemini-flash-latest"; set(v) = p.edit().putString("gmodel", v.trim()).apply()
     var lockOn: Boolean get() = p.getBoolean("lock", false); set(v) = p.edit().putBoolean("lock", v).apply()
     var bioOn: Boolean get() = p.getBoolean("bio", false); set(v) = p.edit().putBoolean("bio", v).apply()
     var defAccount: Long get() = p.getLong("defacc", 2L); set(v) = p.edit().putLong("defacc", v).apply()

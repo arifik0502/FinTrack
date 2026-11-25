@@ -52,7 +52,14 @@ class LocalCategorizer(private val d: AppDao) : Categorizer {
 }
 
 class GeminiClient(private val key: String, private val model: String) {
-    suspend fun ask(prompt: String): String? = withContext(Dispatchers.IO) {
+    companion object { const val FALLBACK = "gemini-flash-latest" }
+
+    suspend fun ask(prompt: String): String? {
+        val m = model.trim().ifBlank { FALLBACK }
+        return call(m, prompt) ?: if (m != FALLBACK) call(FALLBACK, prompt) else null
+    }
+
+    private suspend fun call(model: String, prompt: String): String? = withContext(Dispatchers.IO) {
         try {
             val c = URL("https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent").openConnection() as HttpURLConnection
             c.requestMethod = "POST"; c.connectTimeout = 8000; c.readTimeout = 20000; c.doOutput = true
@@ -62,11 +69,14 @@ class GeminiClient(private val key: String, private val model: String) {
                 .put("contents", JSONArray().put(JSONObject().put("parts", JSONArray().put(JSONObject().put("text", prompt)))))
                 .put("generationConfig", JSONObject().put("responseMimeType", "application/json").put("temperature", 0))
             c.outputStream.use { it.write(body.toString().toByteArray()) }
-            if (c.responseCode != 200) return@withContext null
+            if (c.responseCode != 200) {
+                android.util.Log.w("FinTrackAI", "$model HTTP ${c.responseCode}")
+                return@withContext null
+            }
             JSONObject(c.inputStream.bufferedReader().readText())
                 .getJSONArray("candidates").getJSONObject(0).getJSONObject("content")
                 .getJSONArray("parts").getJSONObject(0).getString("text")
-        } catch (e: Exception) { null }
+        } catch (e: Exception) { android.util.Log.w("FinTrackAI", "$model failed", e); null }
     }
 }
 

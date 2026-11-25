@@ -24,6 +24,11 @@ class TxListener : NotificationListenerService() {
             packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
         } catch (ex: Exception) { pkg.substringAfterLast('.') }
         val ctx = applicationContext
-        scope.launch { try { Ingest.fromNotification(ctx, pkg, label, title, text, sbn.postTime) } catch (_: Exception) { } }
+        scope.launch { try { Ingest.fromNotification(ctx, pkg, label, title, text, sbn.postTime) } catch (e: Exception) { android.util.Log.w("FinTrackListener", "ingest failed", e) } }
+    }
+
+    override fun onListenerDisconnected() {
+        super.onListenerDisconnected()
+        requestRebind(android.content.ComponentName(this, TxListener::class.java))
     }
 }
